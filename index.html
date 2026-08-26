@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CD Chainova Dynamics | Next-Gen Supply Chain</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            chainova: {
+              cyan: '#00A3E0',
+              navy: '#0A192F',
+              light: '#F8FAFC',
+              border: 'rgba(0, 163, 224, 0.15)',
+              card: '#FFFFFF',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'float-delayed': 'float 6s ease-in-out 3s infinite',
+            'blob': 'blob 7s infinite',
+            'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+            'slide-in-right': 'slideInRight 0.8s ease-out forwards',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+              '100%': { transform: 'translate(0px, 0px) scale(1)' },
+            },
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            slideInRight: {
+              '0%': { opacity: '0', transform: 'translateX(20px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    
+    /* Complex Grid Pattern */
+    .bg-grid-complex {
+      background-image: 
+        linear-gradient(to right, rgba(0, 163, 224, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 163, 224, 0.03) 1px, transparent 1px),
+        linear-gradient(to right, rgba(10, 25, 47, 0.02) 2px, transparent 2px),
+        linear-gradient(to bottom, rgba(10, 25, 47, 0.02) 2px, transparent 2px);
+      background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+    }
+
+    /* Glassmorphism Classes */
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.03);
+    }
+    
+    /* Glowing Border Hover */
+    .glow-border {
+      position: relative;
+    }
+    .glow-border::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      background: linear-gradient(45deg, transparent, #00A3E0, transparent);
+      z-index: -1;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .glow-border:hover::before {
+      opacity: 1;
+    }
+
+    /* Staggered Animations */
+    .stagger-1 { animation-delay: 100ms; }
+    .stagger-2 { animation-delay: 200ms; }
+    .stagger-3 { animation-delay: 300ms; }
+    
+    /* Scroll reveal classes */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="bg-chainova-light text-chainova-navy antialiased bg-grid-complex relative min-h-screen">
+
+  <!-- Background Animated Blobs -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-chainova-cyan/20 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+    <div class="absolute top-0 right-1/4 w-96 h-96 bg-blue-300/20 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+    <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-indigo-300/20 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
+  </div>
+
+  <!-- 1. FLOATING NAVIGATION BAR -->
+  <header class="fixed top-6 inset-x-0 max-w-7xl mx-auto z-50 px-4 animate-fade-in-up">
+    <nav class="glass-nav rounded-2xl px-6 py-4 flex items-center justify-between transition-all duration-300 hover:shadow-lg hover:shadow-chainova-cyan/10">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 font-black text-xl tracking-tighter text-chainova-navy">
+          <div class="w-10 h-10 bg-gradient-to-br from-chainova-cyan to-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-chainova-cyan/30">
+            <i data-lucide="link-2" class="w-6 h-6"></i>
+          </div>
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-chainova-navy to-gray-700">CHAINOVA <span class="text-chainova-cyan font-semibold">DYNAMICS</span></span>
+        </div>
+      </div>
+      <div class="hidden md:flex items-center gap-10 text-sm font-semibold text-gray-600">
+        <a href="#solutions" class="relative group hover:text-chainova-cyan transition-colors">
+          Lösungen
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-chainova-cyan transition-all group-hover:w-full"></span>
+        </a>
+        <a href="#network" class="relative group hover:text-chainova-cyan transition-colors">
+          Netzwerk
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-chainova-cyan transition-all group-hover:w-full"></span>
+        </a>
+        <a href="#holding" class="relative group hover:text-chainova-cyan transition-colors">
+          Group Synergy
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-chainova-cyan transition-all group-hover:w-full"></span>
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="#" class="hidden lg:flex text-sm font-medium text-gray-500 hover:text-chainova-navy transition-colors">Login</a>
+        <a href="#contact" class="bg-chainova-navy hover:bg-black text-white text-sm font-bold px-6 py-3 rounded-xl transition-all shadow-xl shadow-chainova-navy/20 hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden group">
+          <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
+          <span>Kontakt</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 2. HERO SECTION -->
+  <section class="pt-48 pb-24 px-4 max-w-7xl mx-auto relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Left Content -->
+      <div class="text-left animate-fade-in-up">
+        <!-- Group Badge -->
+        <div class="inline-flex items-center gap-3 px-4 py-2 bg-white/60 backdrop-blur-sm border border-chainova-cyan/20 rounded-full text-xs font-bold text-chainova-navy mb-8 shadow-sm">
+          <span class="relative flex h-3 w-3">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-chainova-cyan opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-chainova-cyan"></span>
+          </span>
+          A CD Strategy Group Holding Portfolio Company
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="text-5xl md:text-7xl lg:text-[5rem] font-black text-chainova-navy tracking-tight mb-6 leading-[1.1]">
+          POWERING <br>
+          <span class="relative inline-block">
+             <span class="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-chainova-cyan to-blue-600">NEXT-GEN</span>
+             <svg class="absolute w-full h-4 -bottom-1 left-0 text-chainova-cyan/30 z-0" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 10 Q 50 0 100 10" fill="currentColor"/></svg>
+          </span> <br>
+          DYNAMICS.
+        </h1>
+
+        <p class="text-xl text-gray-600 mb-10 leading-relaxed font-medium max-w-xl">
+          Wir orchestrieren datengetriebene Netzwerke und skalierbare Infrastrukturen für eine resiliente Supply Chain von morgen.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#solutions" class="bg-chainova-cyan text-white font-bold px-8 py-4 rounded-xl hover:bg-[#0082B3] transition-all hover:-translate-y-1 shadow-lg shadow-chainova-cyan/30 flex items-center justify-center gap-2 group">
+            Lösungen entdecken
+            <i data-lucide="arrow-up-right" class="w-5 h-5 group-hover:rotate-45 transition-transform"></i>
+          </a>
+          <a href="#network" class="glass-card text-chainova-navy font-bold px-8 py-4 rounded-xl hover:bg-white transition-all flex items-center justify-center gap-3 group">
+            <i data-lucide="play-circle" class="w-5 h-5 text-chainova-cyan group-hover:scale-110 transition-transform"></i>
+            Netzwerk ansehen
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Visual (Floating UI Elements) -->
+      <div class="relative hidden lg:block h-[600px] animate-slide-in-right">
+        <!-- Central glowing orb -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-chainova-cyan/20 rounded-full blur-3xl animate-pulse"></div>
+        
+        <!-- Floating Card 1 -->
+        <div class="absolute top-10 right-10 glass-card p-5 rounded-2xl w-64 animate-float shadow-xl border-t-4 border-t-chainova-cyan">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-chainova-cyan"><i data-lucide="activity" class="w-5 h-5"></i></div>
+            <div>
+              <div class="text-xs text-gray-500 font-bold uppercase">System Status</div>
+              <div class="text-sm font-black text-green-500">99.9% Uptime</div>
+            </div>
+          </div>
+          <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-chainova-cyan w-[99.9%]"></div>
+          </div>
+        </div>
+
+        <!-- Floating Card 2 -->
+        <div class="absolute bottom-20 left-0 glass-card p-5 rounded-2xl w-72 animate-float-delayed shadow-xl border-l-4 border-l-chainova-navy">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-xs text-gray-500 font-bold">Route Optimization</span>
+            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded font-bold">+24% Efficiency</span>
+          </div>
+          <div class="flex items-end gap-2 h-16">
+            <div class="w-1/6 bg-gray-200 h-1/3 rounded-t-sm"></div>
+            <div class="w-1/6 bg-gray-200 h-1/2 rounded-t-sm"></div>
+            <div class="w-1/6 bg-chainova-cyan h-3/4 rounded-t-sm"></div>
+            <div class="w-1/6 bg-chainova-navy h-full rounded-t-sm"></div>
+            <div class="w-1/6 bg-chainova-navy h-4/5 rounded-t-sm"></div>
+          </div>
+        </div>
+
+        <!-- Abstract Nodes -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 400">
+          <path d="M 100 300 Q 200 150 300 100" fill="none" stroke="rgba(0,163,224,0.3)" stroke-width="2" stroke-dasharray="5,5" class="animate-[dash_10s_linear_infinite]" />
+          <circle cx="100" cy="300" r="6" fill="#0A192F" />
+          <circle cx="100" cy="300" r="12" fill="none" stroke="#00A3E0" stroke-width="2" class="animate-ping" />
+          <circle cx="300" cy="100" r="8" fill="#00A3E0" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Metrics Bar -->
+  <section class="max-w-7xl mx-auto px-4 mb-32 relative z-10 reveal">
+    <div class="glass-card rounded-3xl p-8 shadow-2xl flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-chainova-cyan/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+      
+      <div class="flex-1 flex flex-col items-center text-center px-4 w-full border-b md:border-b-0 md:border-r border-gray-200/50 pb-6 md:pb-0">
+        <span class="text-4xl lg:text-5xl font-black text-chainova-navy mb-2 tracking-tighter">99.9<span class="text-chainova-cyan">%</span></span>
+        <span class="text-sm text-gray-500 uppercase tracking-widest font-bold">Real-time Tracking</span>
+        <p class="text-xs text-gray-400 mt-2 max-w-[200px]">Nahtlose Transparenz entlang der gesamten Kette.</p>
+      </div>
+      <div class="flex-1 flex flex-col items-center text-center px-4 w-full border-b md:border-b-0 md:border-r border-gray-200/50 py-6 md:py-0">
+        <span class="text-4xl lg:text-5xl font-black text-chainova-navy mb-2 tracking-tighter">2.4<span class="text-chainova-cyan">x</span></span>
+        <span class="text-sm text-gray-500 uppercase tracking-widest font-bold">Network Efficiency</span>
+        <p class="text-xs text-gray-400 mt-2 max-w-[200px]">Beschleunigung operativer Knotenpunkt-Prozesse.</p>
+      </div>
+      <div class="flex-1 flex flex-col items-center text-center px-4 w-full pt-6 md:pt-0">
+        <span class="text-4xl lg:text-5xl font-black text-chainova-navy mb-2 tracking-tighter">24<span class="text-chainova-cyan">/7</span></span>
+        <span class="text-sm text-gray-500 uppercase tracking-widest font-bold">Scalable Infrastructure</span>
+        <p class="text-xs text-gray-400 mt-2 max-w-[200px]">Bereit für globales Wachstum und Volumenspitzen.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. FEATURE CARDS GRID -->
+  <section id="solutions" class="py-24 px-4 bg-white/50 border-y border-white/50 backdrop-blur-xl relative z-10">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-20 reveal">
+        <span class="text-chainova-cyan font-bold tracking-widest uppercase text-sm mb-3 block">Kernkompetenzen</span>
+        <h2 class="text-4xl md:text-5xl font-black text-chainova-navy mb-6">Intelligente Logistiklösungen</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Vollintegrierte technologische Ansätze für eine hochperformante, transparente und effiziente Supply Chain.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-white rounded-3xl p-10 glow-border hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group reveal stagger-1">
+          <div class="w-16 h-16 bg-gradient-to-br from-chainova-cyan to-blue-500 text-white rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-chainova-cyan/30 group-hover:scale-110 group-hover:rotate-3 transition-transform">
+            <i data-lucide="git-merge" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-2xl font-black text-chainova-navy mb-4">Supply Chain Optimization</h3>
+          <p class="text-gray-600 leading-relaxed mb-8">
+            Echtzeit-Analyse und prädiktive Algorithmen zur maximalen Effizienzsteigerung komplexer Transportrouten und Lagerbestände.
+          </p>
+          <ul class="space-y-3 mb-8 text-sm font-medium text-gray-700">
+            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-chainova-cyan"></i> KI-gestützte Routenplanung</li>
+            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-chainova-cyan"></i> Reduktion von Leerfahrten</li>
+          </ul>
+          <a href="#" class="text-chainova-navy font-bold flex items-center gap-2 group-hover:text-chainova-cyan transition-colors">
+            Technologie ansehen <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white rounded-3xl p-10 glow-border hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group reveal stagger-2">
+          <div class="w-16 h-16 bg-gradient-to-br from-chainova-navy to-gray-800 text-white rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-chainova-navy/30 group-hover:scale-110 group-hover:-rotate-3 transition-transform">
+            <i data-lucide="database-zap" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-2xl font-black text-chainova-navy mb-4">Data-Driven Dynamics</h3>
+          <p class="text-gray-600 leading-relaxed mb-8">
+            Nahtlose Anbindung digitaler Schnittstellen über unsere API-first Architektur für transparente Knotenpunkt-Steuerung.
+          </p>
+          <ul class="space-y-3 mb-8 text-sm font-medium text-gray-700">
+            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-chainova-cyan"></i> Live API-Integration</li>
+            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-chainova-cyan"></i> Zentrale Data-Lakes</li>
+          </ul>
+          <a href="#" class="text-chainova-navy font-bold flex items-center gap-2 group-hover:text-chainova-cyan transition-colors">
+            Infrastruktur ansehen <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white rounded-3xl p-10 glow-border hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group reveal stagger-3">
+          <div class="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 text-chainova-navy rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-gray-200 group-hover:scale-110 group-hover:rotate-3 transition-transform border border-gray-300">
+            <i data-lucide="globe-2" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-2xl font-black text-chainova-navy mb-4">Network Infrastructure</h3>
+          <p class="text-gray-600 leading-relaxed mb-8">
+            Skalierbare operative physische Netzwerke, gestützt durch die enorme Kapitalstärke der CD Strategy Group Holding.
+          </p>
+          <ul class="space-y-3 mb-8 text-sm font-medium text-gray-700">
+            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-chainova-cyan"></i> Globale Hubs</li>
+            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-chainova-cyan"></i> Skalierbares Asset-Management</li>
+          </ul>
+          <a href="#" class="text-chainova-navy font-bold flex items-center gap-2 group-hover:text-chainova-cyan transition-colors">
+            Expansion ansehen <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. NETWORK DASHBOARD SHOWCASE (Complex UI Mockup) -->
+  <section id="network" class="py-32 px-4 max-w-7xl mx-auto reveal">
+    <div class="bg-chainova-navy rounded-[2.5rem] p-4 md:p-8 relative overflow-hidden shadow-2xl border border-gray-800">
+      <!-- Decorative background -->
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTU0LjYyNyAwTDYwIDUuMzczVjYwaC01LjM3M0wwIDUuMzczVjBINTQuNjI3ek0wIDU0LjYyN0w1LjM3MyA2MEgwdi01LjM3M3oiIGZpbGw9IiMxZDI5M2UiIGZpbGwtb3BhY2l0eT0iMC40IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=')] opacity-30"></div>
+      
+      <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-chainova-cyan/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
+
+      <div class="relative z-10 grid lg:grid-cols-2 gap-12 items-center p-4 md:p-8">
+        <div>
+          <span class="text-chainova-cyan font-bold tracking-widest uppercase text-sm mb-3 block flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-chainova-cyan animate-pulse"></span> Control Center
+          </span>
+          <h2 class="text-4xl md:text-5xl font-black text-white mb-6">Mastering Logistics <br>in Real-Time.</h2>
+          <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+            Unser proprietäres Dashboard visualisiert komplexe Lieferströme in einer intuitiven Oberfläche. Behalten Sie Engpässe im Blick und steuern Sie Flotten dynamisch per Mausklick.
+          </p>
+          <div class="flex gap-4">
+            <button class="bg-white text-chainova-navy font-bold px-6 py-3 rounded-lg hover:bg-chainova-cyan hover:text-white transition-colors">Demo anfragen</button>
+          </div>
+        </div>
+
+        <!-- Dashboard UI Mockup -->
+        <div class="bg-[#0f2342]/80 backdrop-blur-xl rounded-2xl border border-gray-700/50 p-4 shadow-2xl">
+          <!-- Window Controls -->
+          <div class="flex items-center gap-2 mb-4 px-2">
+            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+            <div class="ml-4 text-xs font-mono text-gray-500">chainova-nexus-v2.1</div>
+          </div>
+          
+          <div class="grid grid-cols-3 gap-4 mb-4">
+            <div class="bg-chainova-navy/50 p-4 rounded-xl border border-gray-700/50">
+              <div class="text-gray-400 text-xs mb-1">Active Nodes</div>
+              <div class="text-white text-xl font-black">1,492</div>
+              <div class="text-green-400 text-xs flex items-center mt-1"><i data-lucide="trending-up" class="w-3 h-3 mr-1"></i> +12%</div>
+            </div>
+            <div class="bg-chainova-navy/50 p-4 rounded-xl border border-gray-700/50">
+              <div class="text-gray-400 text-xs mb-1">Fleet Status</div>
+              <div class="text-white text-xl font-black">98<span class="text-sm font-normal text-gray-400">%</span></div>
+              <div class="text-chainova-cyan text-xs mt-1">Optimal</div>
+            </div>
+            <div class="bg-chainova-navy/50 p-4 rounded-xl border border-gray-700/50">
+              <div class="text-gray-400 text-xs mb-1">Alerts</div>
+              <div class="text-white text-xl font-black">0</div>
+              <div class="text-gray-500 text-xs mt-1">All clear</div>
+            </div>
+          </div>
+
+          <!-- Animated Map Area -->
+          <div class="w-full h-64 bg-[#0a192f] rounded-xl border border-gray-800 relative overflow-hidden flex items-center justify-center">
+            <!-- Grid -->
+            <div class="absolute inset-0" style="background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px;"></div>
+            
+            <!-- Nodes and Connections -->
+            <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 50 150 Q 150 50 250 120 T 400 100" fill="none" stroke="rgba(0,163,224,0.3)" stroke-width="2" />
+              <path d="M 50 150 Q 150 50 250 120 T 400 100" fill="none" stroke="#00A3E0" stroke-width="2" stroke-dasharray="10 10" class="animate-[dash_20s_linear_infinite]" />
+              
+              <circle cx="50" cy="150" r="4" fill="#fff" />
+              <circle cx="50" cy="150" r="10" fill="none" stroke="#00A3E0" class="animate-ping" />
+              
+              <circle cx="250" cy="120" r="6" fill="#00A3E0" />
+              <circle cx="400" cy="100" r="4" fill="#fff" />
+            </svg>
+            
+            <!-- Floating Data points -->
+            <div class="absolute top-1/4 left-1/4 bg-white/10 backdrop-blur text-white text-[10px] px-2 py-1 rounded border border-white/20">Node Alpha</div>
+            <div class="absolute bottom-1/3 right-1/4 bg-white/10 backdrop-blur text-white text-[10px] px-2 py-1 rounded border border-white/20">Hub Delta</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. HOLDING SYNERGY SECTION (Premium Light/Dark interplay) -->
+  <section id="holding" class="my-24 mx-4 max-w-7xl md:mx-auto bg-gradient-to-br from-chainova-navy via-[#0c2242] to-black text-white rounded-[3rem] p-12 md:p-20 relative overflow-hidden shadow-2xl reveal">
+    <div class="absolute -right-20 -top-40 w-[600px] h-[600px] bg-chainova-cyan/20 rounded-full blur-[150px]"></div>
+    <div class="absolute -left-20 -bottom-40 w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[100px]"></div>
+    
+    <div class="grid md:grid-cols-2 gap-16 relative z-10 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full text-xs font-bold uppercase tracking-widest text-chainova-cyan mb-6 border border-white/10">
+          <i data-lucide="shield" class="w-3 h-3"></i> Corporate Governance
+        </div>
+        <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">Stabilität durch die <br>CD Strategy Group.</h2>
+        <p class="text-gray-300 text-lg leading-relaxed mb-8">
+          Als operativer Tech- und Logistik-Arm profitieren wir direkt von der strategischen Führung, der exzellenten Kapitalallokation und dem weitreichenden Partnernetzwerk der CD Strategy Group Holding.
+        </p>
+        <a href="https://cd-strategy.de" class="inline-flex items-center text-sm font-bold bg-white text-chainova-navy hover:bg-chainova-cyan hover:text-white px-8 py-4 rounded-xl transition-all gap-2 shadow-lg">
+          Holding Portfolio ansehen <i data-lucide="external-link" class="w-4 h-4"></i>
+        </a>
+      </div>
+      
+      <div class="relative">
+        <div class="aspect-square rounded-full border border-white/10 flex items-center justify-center p-8 relative">
+           <div class="absolute inset-0 border border-chainova-cyan/20 rounded-full animate-[spin_60s_linear_infinite]"></div>
+           <div class="absolute inset-8 border border-white/5 rounded-full animate-[spin_40s_linear_infinite_reverse]"></div>
+           
+           <div class="bg-white/5 backdrop-blur-xl border border-white/10 w-full h-full rounded-full flex flex-col items-center justify-center text-center p-12 shadow-2xl">
+             <div class="text-3xl font-black text-white mb-2">CD STRATEGY</div>
+             <div class="text-sm text-chainova-cyan tracking-widest uppercase font-bold">Group Holding</div>
+             <div class="w-16 h-1px bg-white/20 my-4"></div>
+             <div class="text-lg font-bold text-gray-300">Chainova Dynamics</div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ULTRA-PREMIUM FOOTER -->
+  <footer id="contact" class="bg-white pt-24 pb-12 border-t border-gray-100 relative z-10 mt-32">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-12 mb-16">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2 font-black text-xl tracking-tighter text-chainova-navy mb-6">
+            <div class="w-8 h-8 bg-chainova-cyan rounded-lg flex items-center justify-center text-white">
+              <i data-lucide="link-2" class="w-5 h-5"></i>
+            </div>
+            CHAINOVA DYNAMICS
+          </div>
+          <p class="text-gray-500 max-w-sm leading-relaxed font-medium">
+            Next-Gen Supply Chain Dynamics. Wir digitalisieren, optimieren und skalieren logistische Knotenpunkte weltweit.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold text-chainova-navy mb-4">Plattform</h4>
+          <ul class="space-y-3 text-gray-500 font-medium text-sm">
+            <li><a href="#" class="hover:text-chainova-cyan transition-colors">Solutions</a></li>
+            <li><a href="#" class="hover:text-chainova-cyan transition-colors">Network API</a></li>
+            <li><a href="#" class="hover:text-chainova-cyan transition-colors">Control Center</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-chainova-navy mb-4">Unternehmen</h4>
+          <ul class="space-y-3 text-gray-500 font-medium text-sm">
+            <li><a href="#" class="hover:text-chainova-cyan transition-colors">Über uns</a></li>
+            <li><a href="#holding" class="hover:text-chainova-cyan transition-colors">CD Strategy Group</a></li>
+            <li><a href="#" class="hover:text-chainova-cyan transition-colors">Karriere</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 font-medium gap-4">
+        <p>&copy; 2026 CD Chainova Dynamics UG (haftungsbeschränkt). Alle Rechte vorbehalten.</p>
+        <div class="flex gap-8">
+          <a href="#" class="hover:text-chainova-navy transition-colors">Impressum</a>
+          <a href="#" class="hover:text-chainova-navy transition-colors">Datenschutz</a>
+          <a href="#" class="hover:text-chainova-navy transition-colors">AGB</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Scroll Reveal Script
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    const revealCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          // observer.unobserve(entry.target); // optional: only animate once
+        }
+      });
+    };
+    
+    const revealOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+    
+    const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+    
+    revealElements.forEach(el => revealObserver.observe(el));
+    
+    // Trigger reveals on load for elements already in viewport
+    setTimeout(() => {
+      revealElements.forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight) {
+          el.classList.add('active');
+        }
+      });
+    }, 100);
+  </script>
+  <style>
+    @keyframes dash {
+      to { stroke-dashoffset: -100; }
+    }
+    @keyframes shimmer {
+      100% { transform: translateX(100%); }
+    }
+  </style>
+</body>
+</html>

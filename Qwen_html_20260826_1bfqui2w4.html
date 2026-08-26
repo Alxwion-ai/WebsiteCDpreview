@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CD Chainova Dynamics — Powering Next-Gen Supply Chain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A1F44;
+    --navy-2:#0E2654;
+    --cyan:#00A3E0;
+    --cyan-2:#00C2FF;
+    --bg:#FFFFFF;
+    --bg-soft:#F5F8FC;
+    --text:#0A1F44;
+    --text-soft:#5A6B8C;
+    --border:#E4EBF5;
+    --shadow:0 10px 40px rgba(10,31,68,.08);
+    --shadow-lg:0 25px 60px rgba(10,31,68,.15);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  .container{max-width:1280px;margin:0 auto;padding:0 32px}
+
+  /* ============ NAV ============ */
+  nav{
+    position:fixed;top:20px;left:50%;transform:translateX(-50%);
+    width:calc(100% - 40px);max-width:1280px;
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:14px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+    z-index:100;
+    box-shadow:0 4px 20px rgba(10,31,68,.06);
+    transition:all .3s ease;
+  }
+  nav.scrolled{box-shadow:0 10px 40px rgba(10,31,68,.1)}
+  .logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:18px;color:var(--navy)}
+  .logo-mark{
+    width:36px;height:36px;border-radius:10px;
+    background:linear-gradient(135deg,var(--navy),var(--cyan));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:900;font-size:14px;
+    position:relative;
+  }
+  .logo-mark::after{
+    content:'';position:absolute;inset:-2px;border-radius:12px;
+    background:linear-gradient(135deg,var(--cyan),transparent);
+    z-index:-1;filter:blur(6px);opacity:.6;
+  }
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{
+    color:var(--text);text-decoration:none;font-weight:500;font-size:14px;
+    position:relative;transition:color .2s;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;bottom:-6px;left:0;width:0;height:2px;
+    background:var(--cyan);transition:width .3s;
+  }
+  .nav-links a:hover{color:var(--cyan)}
+  .nav-links a:hover::after{width:100%}
+  .holding-badge{
+    display:flex;align-items:center;gap:10px;
+    background:var(--bg-soft);padding:8px 14px;border-radius:100px;
+    font-size:12px;font-weight:600;color:var(--navy);
+    border:1px solid var(--border);
+  }
+  .holding-badge .dot{
+    width:28px;height:28px;border-radius:50%;
+    background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:11px;
+  }
+  .burger{display:none;background:none;border:none;cursor:pointer;font-size:24px;color:var(--navy)}
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;min-height:100vh;
+    display:flex;align-items:center;
+    padding:140px 0 80px;
+    overflow:hidden;
+  }
+  #network-canvas{
+    position:absolute;inset:0;z-index:0;
+    opacity:.55;
+  }
+  .hero-content{position:relative;z-index:2;max-width:720px}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    background:linear-gradient(90deg,rgba(0,163,224,.12),rgba(0,194,255,.08));
+    border:1px solid rgba(0,163,224,.3);
+    color:var(--cyan);
+    padding:8px 18px;border-radius:100px;
+    font-size:13px;font-weight:600;
+    margin-bottom:28px;
+    animation:fadeUp .8s ease both;
+  }
+  .pill .pulse{
+    width:8px;height:8px;border-radius:50%;background:var(--cyan);
+    box-shadow:0 0 0 0 rgba(0,163,224,.6);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(0,163,224,.6)}
+    70%{box-shadow:0 0 0 10px rgba(0,163,224,0)}
+    100%{box-shadow:0 0 0 0 rgba(0,163,224,0)}
+  }
+  h1{
+    font-size:clamp(36px,5.5vw,68px);
+    font-weight:900;line-height:1.05;letter-spacing:-.02em;
+    color:var(--navy);margin-bottom:24px;
+    animation:fadeUp .8s .1s ease both;
+  }
+  h1 .grad{
+    background:linear-gradient(135deg,var(--cyan) 0%,var(--cyan-2) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{
+    font-size:clamp(16px,1.6vw,20px);color:var(--text-soft);
+    max-width:600px;margin-bottom:40px;
+    animation:fadeUp .8s .2s ease both;
+  }
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap;animation:fadeUp .8s .3s ease both}
+  .btn{
+    padding:16px 32px;border-radius:12px;font-weight:600;font-size:15px;
+    text-decoration:none;cursor:pointer;border:none;
+    display:inline-flex;align-items:center;gap:10px;
+    transition:all .25s ease;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--cyan),var(--cyan-2));
+    color:#fff;
+    box-shadow:0 10px 30px rgba(0,163,224,.35);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(0,163,224,.5)}
+  .btn-secondary{
+    background:#fff;color:var(--navy);border:1.5px solid var(--border);
+  }
+  .btn-secondary:hover{border-color:var(--cyan);color:var(--cyan)}
+  .btn svg{width:18px;height:18px;transition:transform .25s}
+  .btn:hover svg{transform:translateX(4px)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+  /* ============ METRICS ============ */
+  .metrics{
+    padding:60px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    background:var(--bg-soft);
+  }
+  .metrics-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+  }
+  .metric{
+    text-align:center;position:relative;
+  }
+  .metric:not(:last-child)::after{
+    content:'';position:absolute;right:-16px;top:10%;height:80%;
+    width:1px;background:var(--border);
+  }
+  .metric-value{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(28px,3.5vw,44px);font-weight:700;color:var(--navy);
+    letter-spacing:-.02em;
+  }
+  .metric-value .unit{color:var(--cyan);font-size:.7em}
+  .metric-label{
+    font-size:13px;color:var(--text-soft);font-weight:500;
+    text-transform:uppercase;letter-spacing:.08em;margin-top:6px;
+  }
+
+  /* ============ FEATURES ============ */
+  .features{padding:120px 0}
+  .section-head{text-align:center;margin-bottom:72px}
+  .section-tag{
+    display:inline-block;font-size:12px;font-weight:700;
+    color:var(--cyan);text-transform:uppercase;letter-spacing:.15em;
+    margin-bottom:16px;
+  }
+  .section-head h2{
+    font-size:clamp(30px,4vw,48px);font-weight:800;color:var(--navy);
+    letter-spacing:-.02em;line-height:1.15;
+  }
+  .section-head p{
+    color:var(--text-soft);max-width:600px;margin:20px auto 0;
+    font-size:17px;
+  }
+  .feature-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:28px;
+  }
+  .feature-card{
+    background:#fff;border:1px solid var(--border);border-radius:20px;
+    padding:40px 32px;
+    transition:all .35s ease;
+    position:relative;overflow:hidden;
+  }
+  .feature-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--cyan),var(--cyan-2));
+    transform:scaleX(0);transform-origin:left;transition:transform .4s;
+  }
+  .feature-card:hover{
+    transform:translateY(-8px);
+    box-shadow:var(--shadow-lg);
+    border-color:rgba(0,163,224,.3);
+  }
+  .feature-card:hover::before{transform:scaleX(1)}
+  .feature-icon{
+    width:64px;height:64px;border-radius:16px;
+    background:linear-gradient(135deg,rgba(0,163,224,.12),rgba(0,194,255,.06));
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:28px;
+    color:var(--cyan);
+    transition:transform .35s;
+  }
+  .feature-card:hover .feature-icon{transform:scale(1.08) rotate(-4deg)}
+  .feature-icon svg{width:32px;height:32px}
+  .feature-card h3{
+    font-size:22px;font-weight:700;color:var(--navy);margin-bottom:12px;
+  }
+  .feature-card p{color:var(--text-soft);font-size:15px;line-height:1.7}
+  .feature-link{
+    display:inline-flex;align-items:center;gap:8px;
+    margin-top:24px;color:var(--cyan);font-weight:600;font-size:14px;
+    text-decoration:none;
+  }
+  .feature-link:hover{gap:12px}
+
+  /* ============ DASHBOARD ============ */
+  .dashboard{
+    padding:40px 0 120px;
+  }
+  .dashboard-card{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);
+    border-radius:24px;
+    padding:48px;
+    position:relative;overflow:hidden;
+    box-shadow:var(--shadow-lg);
+  }
+  .dashboard-card::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 20% 50%,rgba(0,163,224,.15),transparent 50%),
+               radial-gradient(circle at 80% 50%,rgba(0,194,255,.1),transparent 50%);
+  }
+  .dash-head{
+    display:flex;justify-content:space-between;align-items:center;
+    position:relative;z-index:2;margin-bottom:32px;flex-wrap:wrap;gap:20px;
+  }
+  .dash-head h3{
+    color:#fff;font-size:24px;font-weight:700;
+  }
+  .dash-head h3 span{color:var(--cyan-2)}
+  .dash-status{
+    display:flex;align-items:center;gap:10px;
+    background:rgba(0,163,224,.15);border:1px solid rgba(0,163,224,.3);
+    color:#fff;padding:8px 16px;border-radius:100px;font-size:13px;font-weight:600;
+  }
+  .dash-status .pulse{
+    width:8px;height:8px;border-radius:50%;background:var(--cyan-2);
+    box-shadow:0 0 0 0 rgba(0,194,255,.6);animation:pulse 2s infinite;
+  }
+  .map-wrap{
+    position:relative;z-index:2;
+    aspect-ratio:2.2/1;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  #map-svg{width:100%;height:100%;display:block}
+  .map-node{fill:var(--cyan-2);filter:drop-shadow(0 0 6px var(--cyan-2))}
+  .map-node.hub{fill:#fff}
+  .map-line{stroke:var(--cyan);stroke-width:1;opacity:.4;fill:none}
+  .map-line.active{opacity:.9;stroke-width:1.5;stroke-dasharray:4 4;animation:dash 2s linear infinite}
+  @keyframes dash{to{stroke-dashoffset:-20}}
+  .dash-stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+    margin-top:32px;position:relative;z-index:2;
+  }
+  .dash-stat{
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+    padding:20px;border-radius:12px;
+  }
+  .dash-stat .label{color:rgba(255,255,255,.6);font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+  .dash-stat .val{color:#fff;font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;margin-top:6px}
+  .dash-stat .val .u{color:var(--cyan-2);font-size:.6em}
+
+  /* ============ GROUP BAND ============ */
+  .group-band{
+    background:linear-gradient(135deg,#050D1E 0%,var(--navy) 100%);
+    padding:80px 0;
+    position:relative;overflow:hidden;
+  }
+  .group-band::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 30% 50%,rgba(0,163,224,.15),transparent 60%);
+  }
+  .group-inner{
+    position:relative;z-index:2;
+    display:flex;align-items:center;justify-content:space-between;gap:40px;
+    flex-wrap:wrap;
+  }
+  .group-inner .left{flex:1;min-width:280px}
+  .group-inner .right{flex:1;min-width:280px;text-align:right}
+  .group-inner h2{
+    color:#fff;font-size:clamp(24px,3vw,36px);font-weight:800;
+    margin-bottom:16px;
+  }
+  .group-inner h2 .cyan{color:var(--cyan-2)}
+  .group-inner p{color:rgba(255,255,255,.7);font-size:16px;max-width:520px}
+  .group-logo{
+    display:inline-flex;align-items:center;gap:14px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+    padding:14px 22px;border-radius:14px;
+  }
+  .group-logo .mark{
+    width:44px;height:44px;border-radius:12px;
+    background:linear-gradient(135deg,var(--cyan),var(--cyan-2));
+    display:flex;align-items:center;justify-content:center;
+    color:var(--navy);font-weight:900;font-size:18px;
+  }
+  .group-logo .txt{color:#fff;font-weight:700;font-size:15px;text-align:left}
+  .group-logo .txt small{display:block;color:rgba(255,255,255,.5);font-weight:400;font-size:11px;margin-top:2px}
+
+  /* ============ FOOTER ============ */
+  footer{
+    background:#050D1E;color:rgba(255,255,255,.7);
+    padding:60px 0 30px;
+  }
+  .footer-grid{
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;
+    padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .footer-brand .logo{color:#fff;margin-bottom:16px}
+  .footer-brand p{font-size:14px;max-width:320px;line-height:1.7}
+  .footer-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:20px;text-transform:uppercase;letter-spacing:.1em}
+  .footer-col ul{list-style:none}
+  .footer-col li{margin-bottom:10px}
+  .footer-col a{color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;transition:color .2s}
+  .footer-col a:hover{color:var(--cyan-2)}
+  .footer-bottom{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:30px;font-size:13px;flex-wrap:wrap;gap:16px;
+  }
+  .footer-bottom .legal{color:rgba(255,255,255,.4)}
+
+  /* ============ REVEAL ============ */
+  .reveal{opacity:0;transform:translateY(30px);transition:all .8s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* ============ RESPONSIVE ============ */
+  @media(max-width:900px){
+    .nav-links,.holding-badge{display:none}
+    .burger{display:block}
+    .metrics-grid{grid-template-columns:repeat(2,1fr)}
+    .metric:not(:last-child)::after{display:none}
+    .feature-grid{grid-template-columns:1fr}
+    .dash-stats{grid-template-columns:repeat(2,1fr)}
+    .footer-grid{grid-template-columns:1fr 1fr}
+    nav{padding:12px 20px}
+  }
+  @media(max-width:560px){
+    .container{padding:0 20px}
+    .metrics-grid{grid-template-columns:1fr}
+    .dash-stats{grid-template-columns:1fr}
+    .footer-grid{grid-template-columns:1fr}
+    .dashboard-card{padding:28px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="logo">
+    <div class="logo-mark">CD</div>
+    <span>Chainova Dynamics</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#features">Solutions</a></li>
+    <li><a href="#dashboard">Network</a></li>
+    <li><a href="#group">Group</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="C:\Users\alwin\.gemini\antigravity\scratch\cd-chainova\index.html">Second Page</a></li>
+  </ul>
+  <div class="holding-badge">
+    <span class="dot">A</span>
+    <span>CD Strategy Group<br>Holding Company</span>
+  </div>
+  <button class="burger" aria-label="Menu">☰</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="network-canvas"></canvas>
+  <div class="container">
+    <div class="hero-content">
+      <div class="pill"><span class="pulse"></span> A CD Strategy Group Holding Portfolio Company</div>
+      <h1>POWERING NEXT-GEN<br><span class="grad">SUPPLY CHAIN DYNAMICS</span></h1>
+      <p class="sub">Intelligente Logistik. Skalierbare Supply Chain Dynamics. Datengetriebene Netzwerke und moderne Infrastruktur für die Supply Chain von morgen.</p>
+      <div class="cta-row">
+        <a href="#dashboard" class="btn btn-primary">Netzwerk starten
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#group" class="btn btn-secondary">Holding entdecken</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="metrics">
+  <div class="container">
+    <div class="metrics-grid">
+      <div class="metric">
+        <div class="metric-value"><span data-count="98.7" data-decimals="1">0</span><span class="unit">%</span></div>
+        <div class="metric-label">Network Efficiency</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value"><span data-count="24" data-decimals="0">0</span><span class="unit">/7</span></div>
+        <div class="metric-label">Real-time Operations</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value"><span data-count="142" data-decimals="0">0</span><span class="unit">+</span></div>
+        <div class="metric-label">Logistics Nodes</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value"><span data-count="3.2" data-decimals="1">0</span><span class="unit">M</span></div>
+        <div class="metric-label">Data Points / Day</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-tag">Core Capabilities</span>
+      <h2>Intelligente Logistik-Infrastruktur,<br>die mit Ihrem Business skaliert.</h2>
+      <p>Drei Säulen, die Ihre Supply Chain in ein vernetztes, datengetriebenes Ökosystem verwandeln.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <h3>Supply Chain Optimization</h3>
+        <p>Prozess- und Routeneffizienz durch algorithmisch optimierte Logistik-Ketten. Reduzieren Sie Kosten und Transitzeiten signifikant.</p>
+        <a href="#" class="feature-link">Mehr erfahren →</a>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+        </div>
+        <h3>Data-Driven Dynamics</h3>
+        <p>Echtzeit-Analyse und prädiktive Datenflüsse. Treffen Sie fundierte Entscheidungen basierend auf Live-Insights aus Ihrem Netzwerk.</p>
+        <a href="#" class="feature-link">Mehr erfahren →</a>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <h3>Network Infrastructure</h3>
+        <p>Skalierbare Logistik-Knotenpunkte mit globaler Reichweite. Eine Architektur, die mit Ihrem Wachstum Schritt hält.</p>
+        <a href="#" class="feature-link">Mehr erfahren →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="dashboard" id="dashboard">
+  <div class="container">
+    <div class="dashboard-card reveal">
+      <div class="dash-head">
+        <h3>Live <span>Network Dashboard</span></h3>
+        <div class="dash-status"><span class="pulse"></span> System operational · 142 nodes active</div>
+      </div>
+      <div class="map-wrap">
+        <svg id="map-svg" viewBox="0 0 1000 450" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+      <div class="dash-stats">
+        <div class="dash-stat">
+          <div class="label">Active Shipments</div>
+          <div class="val">12,847</div>
+        </div>
+        <div class="dash-stat">
+          <div class="label">On-Time Rate</div>
+          <div class="val">98.7<span class="u">%</span></div>
+        </div>
+        <div class="dash-stat">
+          <div class="label">Regions Covered</div>
+          <div class="val">64</div>
+        </div>
+        <div class="dash-stat">
+          <div class="label">CO₂ Reduced</div>
+          <div class="val">-23.4<span class="u">%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GROUP BAND -->
+<section class="group-band" id="group">
+  <div class="container">
+    <div class="group-inner">
+      <div class="left">
+        <h2>Embedded in <span class="cyan">CD Strategy Group</span> Holding</h2>
+        <p>Als Portfolio-Unternehmen der CD Strategy Group Holding profitieren wir von synergetischer Expertise, strategischem Kapital und einem etablierten B2B-Netzwerk. Vertrauen, das auf struktureller Stärke basiert.</p>
+      </div>
+      <div class="right">
+        <div class="group-logo">
+          <div class="mark">CD</div>
+          <div class="txt">CD Strategy Group<small>Holding Company · Est. 2019</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-mark">CD</div>
+          <span>Chainova Dynamics</span>
+        </div>
+        <p>Intelligente Logistik-Infrastruktur für die Supply Chain von morgen. Ein Unternehmen der CD Strategy Group Holding.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="#">Optimization</a></li>
+          <li><a href="#">Data Dynamics</a></li>
+          <li><a href="#">Infrastructure</a></li>
+          <li><a href="#">API Access</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Network</a></li>
+          <li><a href="#">Group</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Impressum</a></li>
+          <li><a href="#">Datenschutz</a></li>
+          <li><a href="#">AGB</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="legal">© 2026 CD Chainova Dynamics UG (haftungsbeschränkt). Alle Rechte vorbehalten.</span>
+      <span class="legal">A CD Strategy Group Holding Company</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============ NAV SCROLL ============ */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>20);
+});
+
+/* ============ HERO NETWORK CANVAS ============ */
+const canvas=document.getElementById('network-canvas');
+const ctx=canvas.getContext('2d');
+let W,H,particles=[];
+function resize(){
+  const r=window.devicePixelRatio||1;
+  W=canvas.width=canvas.offsetWidth*r;
+  H=canvas.height=canvas.offsetHeight*r;
+  ctx.scale(r,r);
+}
+resize();
+window.addEventListener('resize',resize);
+
+const count=window.innerWidth<700?40:80;
+for(let i=0;i<count;i++){
+  particles.push({
+    x:Math.random()*canvas.offsetWidth,
+    y:Math.random()*canvas.offsetHeight,
+    vx:(Math.random()-.5)*.4,
+    vy:(Math.random()-.5)*.4,
+    r:Math.random()*2+1
+  });
+}
+function animate(){
+  const w=canvas.offsetWidth,h=canvas.offsetHeight;
+  ctx.clearRect(0,0,w,h);
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>w)p.vx*=-1;
+    if(p.y<0||p.y>h)p.vy*=-1;
+  });
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x;
+      const dy=particles[i].y-particles[j].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<140){
+        ctx.strokeStyle=`rgba(0,163,224,${(1-d/140)*.5})`;
+        ctx.lineWidth=.6;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+  particles.forEach(p=>{
+    ctx.fillStyle='rgba(0,194,255,.8)';
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ============ COUNT UP ============ */
+const counters=document.querySelectorAll('[data-count]');
+const countObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target;
+      const target=parseFloat(el.dataset.count);
+      const dec=parseInt(el.dataset.decimals||0);
+      const dur=1500;
+      const start=performance.now();
+      function tick(t){
+        const p=Math.min((t-start)/dur,1);
+        const eased=1-Math.pow(1-p,3);
+        el.textContent=(target*eased).toFixed(dec);
+        if(p<1)requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      countObs.unobserve(el);
+    }
+  });
+},{threshold:.5});
+counters.forEach(c=>countObs.observe(c));
+
+/* ============ REVEAL ============ */
+const reveals=document.querySelectorAll('.reveal');
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});
+},{threshold:.15});
+reveals.forEach(r=>revObs.observe(r));
+
+/* ============ SVG WORLD MAP ============ */
+const svg=document.getElementById('map-svg');
+const NS='http://www.w3.org/2000/svg';
+
+// Simplified continent dots (x,y in viewBox 1000x450)
+const continents=[
+  // North America
+  [180,120],[200,110],[220,100],[240,95],[260,100],[280,110],[290,130],[280,150],[260,160],[240,165],[220,170],[200,160],[180,140],
+  // South America
+  [280,220],[300,230],[310,260],[305,300],[290,330],[275,350],[260,340],[255,310],[260,280],[270,250],
+  // Europe
+  [470,110],[490,105],[510,110],[520,125],[515,140],[500,145],[480,140],[465,130],
+  // Africa
+  [480,170],[500,165],[520,175],[530,200],[525,240],[510,280],[495,300],[480,290],[470,260],[465,220],[470,190],
+  // Asia
+  [540,100],[580,90],[630,95],[680,110],[720,120],[760,130],[790,150],[780,170],[750,180],[700,175],[650,170],[600,165],[560,150],[540,130],
+  // Australia
+  [780,290],[810,285],[840,295],[850,315],[830,330],[800,325],[780,310],
+];
+// Draw continents as connected dots
+const contGroup=document.createElementNS(NS,'g');
+contGroup.setAttribute('opacity','0.35');
+continents.forEach(([x,y],i)=>{
+  const c=document.createElementNS(NS,'circle');
+  c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',2);
+  c.setAttribute('fill','#00C2FF');
+  contGroup.appendChild(c);
+  if(i>0){
+    const [px,py]=continents[i-1];
+    const dist=Math.hypot(x-px,y-py);
+    if(dist<60){
+      const l=document.createElementNS(NS,'line');
+      l.setAttribute('x1',px);l.setAttribute('y1',py);
+      l.setAttribute('x2',x);l.setAttribute('y2',y);
+      l.setAttribute('stroke','#00C2FF');l.setAttribute('stroke-width','1');
+      contGroup.appendChild(l);
+    }
+  }
+});
+svg.appendChild(contGroup);
+
+// Hubs
+const hubs=[
+  {x:220,y:140,name:'New York'},
+  {x:490,y:120,name:'London'},
+  {x:520,y:135,name:'Frankfurt'},
+  {x:700,y:150,name:'Shanghai'},
+  {x:780,y:310,name:'Sydney'},
+  {x:275,y:330,name:'São Paulo'},
+  {x:500,y:240,name:'Dubai'},
+];
+const hubGroup=document.createElementNS(NS,'g');
+hubs.forEach(h=>{
+  const c=document.createElementNS(NS,'circle');
+  c.setAttribute('cx',h.x);c.setAttribute('cy',h.y);c.setAttribute('r',5);
+  c.setAttribute('class','map-node hub');
+  hubGroup.appendChild(c);
+  // pulse ring
+  const ring=document.createElementNS(NS,'circle');
+  ring.setAttribute('cx',h.x);ring.setAttribute('cy',h.y);ring.setAttribute('r',5);
+  ring.setAttribute('fill','none');ring.setAttribute('stroke','#00C2FF');ring.setAttribute('stroke-width','1.5');
+  const anim=document.createElementNS(NS,'animate');
+  anim.setAttribute('attributeName','r');anim.setAttribute('from','5');anim.setAttribute('to','18');
+  anim.setAttribute('dur','2s');anim.setAttribute('repeatCount','indefinite');
+  const animOp=document.createElementNS(NS,'animate');
+  animOp.setAttribute('attributeName','opacity');animOp.setAttribute('from','1');animOp.setAttribute('to','0');
+  animOp.setAttribute('dur','2s');animOp.setAttribute('repeatCount','indefinite');
+  ring.appendChild(anim);ring.appendChild(animOp);
+  hubGroup.appendChild(ring);
+});
+svg.appendChild(hubGroup);
+
+// Routes
+const routes=[
+  [0,1],[1,2],[2,3],[3,4],[0,5],[2,6],[6,3],[1,6],[3,4],
+];
+const routeGroup=document.createElementNS(NS,'g');
+routes.forEach(([a,b],i)=>{
+  const [x1,y1]=hubs[a],[x2,y2]=hubs[b];
+  const mx=(x1+x2)/2, my=Math.min(y1,y2)-40;
+  const path=document.createElementNS(NS,'path');
+  path.setAttribute('d',`M${x1},${y1} Q${mx},${my} ${x2},${y2}`);
+  path.setAttribute('class','map-line active');
+  path.style.animationDelay=(i*.2)+'s';
+  routeGroup.appendChild(path);
+});
+svg.appendChild(routeGroup);
+
+// Flowing particles along routes
+routes.forEach(([a,b],i)=>{
+  const [x1,y1]=hubs[a],[x2,y2]=hubs[b];
+  const mx=(x1+x2)/2, my=Math.min(y1,y2)-40;
+  const dot=document.createElementNS(NS,'circle');
+  dot.setAttribute('r','3');dot.setAttribute('fill','#fff');
+  const animM=document.createElementNS(NS,'animateMotion');
+  animM.setAttribute('dur',(3+Math.random()*2)+'s');
+  animM.setAttribute('repeatCount','indefinite');
+  animM.setAttribute('begin',(i*.3)+'s');
+  const mp=document.createElementNS(NS,'mpath');
+  const path=document.createElementNS(NS,'path');
+  path.setAttribute('id','rp'+i);
+  path.setAttribute('d',`M${x1},${y1} Q${mx},${my} ${x2},${y2}`);
+  path.setAttribute('fill','none');
+  svg.appendChild(path);
+  animM.setAttribute('href','#rp'+i);
+  dot.appendChild(animM);
+  routeGroup.appendChild(dot);
+});
+</script>
+</body>
+</html>
